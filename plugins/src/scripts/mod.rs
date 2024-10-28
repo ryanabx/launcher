@@ -109,7 +109,10 @@ impl App {
                 .join(LOCAL_PATH),
         );
         queue.push_back(Path::new(SYSTEM_ADMIN_PATH).to_owned());
-        queue.push_back(Path::new(DISTRIBUTION_PATH).to_owned());
+        queue.push_back(
+            Path::new(option_env!("POP_LAUNCHER_PLUGIN_DIR").unwrap_or(DISTRIBUTION_PATH))
+                .to_owned(),
+        );
 
         let script_sender = async move {
             while let Some(path) = queue.pop_front() {
